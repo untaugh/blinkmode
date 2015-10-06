@@ -25,7 +25,7 @@ TEST_GROUP(Blinkmode)
 	pattern
       };
 
-      blinkmode_current_pattern = bm1; 
+      blinkmode_set_pattern(bm1);
     }
   
 };
@@ -40,15 +40,3 @@ TEST(Blinkmode, clocktick)
 
   LONGS_EQUAL(9,blinkmode_clock);
 }
-
-TEST(Blinkmode, setpattern)
-{
-  load_test_pattern();
-
-  LONGS_EQUAL(10,blinkmode_current_pattern.delay);
-  
-  LONGS_EQUAL(4,blinkmode_current_pattern.size);
-
-  LONGS_EQUAL(2,blinkmode_current_pattern.pattern[1]);  
-}
-

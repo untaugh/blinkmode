@@ -4,7 +4,7 @@ uint8_t blinkmode_clock;
 
 static uint8_t pattern_counter;
 
-struct Blinkmode blinkmode_current_pattern;
+static struct Blinkmode blinkmode_current_pattern;
 
 static void (*blinkmode_set[8])(void); // array of set functions
 
@@ -84,4 +84,12 @@ void blinkmode_init(void)
       blinkmode_set[i] = 0;
       blinkmode_clr[i] = 0;
     }
+}
+
+void blinkmode_set_pattern(struct Blinkmode bm)
+{
+  blinkmode_clock = 0;
+  pattern_counter = 0;
+
+  blinkmode_current_pattern = bm;
 }
