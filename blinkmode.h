@@ -13,7 +13,7 @@ struct Blinkmode
 
 extern uint8_t blinkmode_clock;
 
-void blinkmode_set_pattern(struct Blinkmode);
+void blinkmode_set_pattern(struct Blinkmode *);
 
 void blinkmode_tick(void); // clock tick tock
 

@@ -33,7 +33,7 @@ TEST_GROUP(BlinkmodeMock)
   
   void load_test_pattern(void)
     {
-      blinkmode_set_pattern(bm1);
+      blinkmode_set_pattern(&bm1);
     }
   
 };
@@ -203,7 +203,7 @@ TEST(BlinkmodeMock, switchpattern)
   mock().enable();
 
   // switch to shorter pattern
-  blinkmode_set_pattern(bm2);
+  blinkmode_set_pattern(&bm2);
   
   mock().expectOneCall("red_test_set");
   mock().expectOneCall("green_test_clr");

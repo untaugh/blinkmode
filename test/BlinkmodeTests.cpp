@@ -25,7 +25,7 @@ TEST_GROUP(Blinkmode)
 	pattern
       };
 
-      blinkmode_set_pattern(bm1);
+      blinkmode_set_pattern(&bm1);
     }
   
 };
