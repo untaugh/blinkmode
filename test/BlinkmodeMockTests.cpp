@@ -7,6 +7,8 @@ uint8_t patternmock[] = {0x01,0x82,0x83,0x00};
 
 uint8_t patternmock2[] = {0x01,0x0};
 
+uint8_t patterntemp[] = {0x00,0x00,0x01,0x00};
+
 struct Blinkmode bm1 = {
   10,
   sizeof(patternmock),
@@ -17,6 +19,12 @@ struct Blinkmode bm2 = {
   5,
   sizeof(patternmock2),
   patternmock2
+};
+
+struct Blinkmode bm_temp = {
+  10,
+  sizeof(patterntemp),
+  patterntemp
 };
 
 TEST_GROUP(BlinkmodeMock)
@@ -184,7 +192,7 @@ TEST(BlinkmodeMock,redandgreen)
 // run a pattern, and switch to a shorter one
 TEST(BlinkmodeMock, switchpattern)
 {
-    int i;
+  int i;
   
   load_test_pattern();
 
@@ -210,12 +218,12 @@ TEST(BlinkmodeMock, switchpattern)
   mock().expectOneCall("red_test_clr");
   mock().expectOneCall("green_test_clr");
 
-    for (i=0; i<10; i++)
+  for (i=0; i<10; i++)
     {
       blinkmode_tick();    
     }
 
-      mock().expectOneCall("red_test_set");
+  mock().expectOneCall("red_test_set");
   mock().expectOneCall("green_test_clr");
   mock().expectOneCall("red_test_clr");
   mock().expectOneCall("green_test_clr");
@@ -226,5 +234,48 @@ TEST(BlinkmodeMock, switchpattern)
     }
     
   mock().checkExpectations();
+
+}
+
+TEST(BlinkmodeMock, TemporaryPattern)
+{
+  int i;
+  
+  load_test_pattern();
+
+  blinkmode_set_temp(&bm_temp,2); // run temp pattern twice
+
+  blinkmode_setset(red_test_set,0);
+  blinkmode_setclr(red_test_clr,0);
+
+  mock().expectOneCall("red_test_clr");
+  mock().expectOneCall("red_test_clr");
+  mock().expectOneCall("red_test_set");
+  mock().expectOneCall("red_test_clr");
+
+  for (i=0; i<40; i++)
+    {
+      blinkmode_tick();    
+    }
+  
+  mock().expectOneCall("red_test_clr");
+  mock().expectOneCall("red_test_clr");
+  mock().expectOneCall("red_test_set");
+  mock().expectOneCall("red_test_clr");
+
+  for (i=0; i<40; i++)
+    {
+      blinkmode_tick();    
+      }
+
+  mock().expectOneCall("red_test_set");
+  mock().expectOneCall("red_test_clr");
+
+  for (i=0; i<20; i++)
+    {
+      blinkmode_tick(); 
+    }
+  
+    mock().checkExpectations();
 
 }

@@ -15,6 +15,8 @@ extern uint8_t blinkmode_clock;
 
 void blinkmode_set_pattern(struct Blinkmode *);
 
+void blinkmode_set_temp(struct Blinkmode *,uint8_t count);
+
 void blinkmode_tick(void); // clock tick tock
 
 void blinkmode_setset(void (), uint8_t); // set the led setters
